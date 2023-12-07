@@ -18,7 +18,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadWrite)
-	float fInteractionDistance = 50.f;
+	float fInteractionDistance = 150.f;
 
 	// Called when the game starts
 	virtual void BeginPlay() override;

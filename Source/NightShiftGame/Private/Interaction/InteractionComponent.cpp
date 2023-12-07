@@ -30,6 +30,7 @@ void UInteractionComponent::Interact()
 	FHitResult OutHit;
 	const FVector StartCoord = GetComponentLocation();
 	const FVector EndCoord = GetComponentLocation() + GetForwardVector() * fInteractionDistance;
+	DrawDebugLine(GetWorld(), StartCoord, EndCoord, FColor::Green, true, 5.f);
 	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartCoord, EndCoord, ECC_Visibility))
 	{
 		// if component exists and implements interface, interact and return
