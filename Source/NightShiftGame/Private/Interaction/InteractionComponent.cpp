@@ -28,10 +28,13 @@ void UInteractionComponent::BeginPlay()
 void UInteractionComponent::Interact()
 {
 	FHitResult OutHit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(GetOwner());
 	const FVector StartCoord = GetComponentLocation();
 	const FVector EndCoord = GetComponentLocation() + GetForwardVector() * fInteractionDistance;
 	DrawDebugLine(GetWorld(), StartCoord, EndCoord, FColor::Green, true, 5.f);
-	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartCoord, EndCoord, ECC_Visibility))
+	UE_LOG(LogTemp, Warning, TEXT("fuck"));
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartCoord, EndCoord, ECC_Visibility, Params))
 	{
 		// if component exists and implements interface, interact and return
 		if (OutHit.GetComponent())
@@ -47,6 +50,7 @@ void UInteractionComponent::Interact()
 		{
 			if (OutHit.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 			{
+				UE_LOG(LogTemp, Warning, TEXT("fuck2"));
 				IInteractable::Execute_Interact(OutHit.GetActor());
 				return;
 			}
