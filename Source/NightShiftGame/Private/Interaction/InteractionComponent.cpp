@@ -35,7 +35,6 @@ void UInteractionComponent::ServerInteract_Implementation()
 	const FVector StartCoord = GetComponentLocation();
 	const FVector EndCoord = GetComponentLocation() + GetForwardVector() * fInteractionDistance;
 	DrawDebugLine(GetWorld(), StartCoord, EndCoord, FColor::Green, true, 5.f);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Fuck"));
 	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartCoord, EndCoord, ECC_Visibility, Params))
 	{
 		// if component exists and implements interface, interact and return
@@ -52,7 +51,6 @@ void UInteractionComponent::ServerInteract_Implementation()
 		{
 			if (OutHit.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Fuck2"));
 				IInteractable::Execute_Interact(OutHit.GetActor());
 				return;
 			}
