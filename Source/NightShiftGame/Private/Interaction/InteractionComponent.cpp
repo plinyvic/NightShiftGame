@@ -24,8 +24,10 @@ void UInteractionComponent::BeginPlay()
 	
 }
 
-// Send a raycast from the origin of this component and call IInteractable::Interact on the first Actor/Component collided with.
-void UInteractionComponent::Interact()
+/*
+* sends a linetrace from the components server position and attempts to interact with what it hits.
+*/ 
+void UInteractionComponent::ServerInteract_Implementation()
 {
 	FHitResult OutHit;
 	FCollisionQueryParams Params;
@@ -33,7 +35,7 @@ void UInteractionComponent::Interact()
 	const FVector StartCoord = GetComponentLocation();
 	const FVector EndCoord = GetComponentLocation() + GetForwardVector() * fInteractionDistance;
 	DrawDebugLine(GetWorld(), StartCoord, EndCoord, FColor::Green, true, 5.f);
-	UE_LOG(LogTemp, Warning, TEXT("fuck"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Fuck"));
 	if (GetWorld()->LineTraceSingleByChannel(OutHit, StartCoord, EndCoord, ECC_Visibility, Params))
 	{
 		// if component exists and implements interface, interact and return
@@ -50,7 +52,7 @@ void UInteractionComponent::Interact()
 		{
 			if (OutHit.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("fuck2"));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Fuck2"));
 				IInteractable::Execute_Interact(OutHit.GetActor());
 				return;
 			}
@@ -58,12 +60,10 @@ void UInteractionComponent::Interact()
 	}
 }
 
-
-// Called every frame
-void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+// TODO: verify that interaction is possible. likely requires refactor.
+bool UInteractionComponent::ServerInteract_Validate()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	//return (GetComponentLocation() - TargetCoord).SquaredLength() >= fInteractionDistance;
+	return true;
 }
 
