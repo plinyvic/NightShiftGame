@@ -20,8 +20,17 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	float fInteractionDistance = 150.f;
 
+	UObject* FocusedObject = nullptr;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+	bool LineTraceGetHit(/*out*/ FHitResult& OutHit);
+	void UnfocusLastObject();
+	void FocusObject(UObject* NextFocus);
 
 public:	
 	UFUNCTION(BlueprintCallable, Server, WithValidation, Unreliable)
