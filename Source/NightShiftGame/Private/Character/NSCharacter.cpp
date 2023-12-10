@@ -18,11 +18,6 @@ void ANSCharacter::BeginPlay()
 	
 }
 
-FRotator ANSCharacter::GetAimRotation()
-{
-	return GetBaseAimRotation();
-}
-
 // Called every frame
 void ANSCharacter::Tick(float DeltaTime)
 {
