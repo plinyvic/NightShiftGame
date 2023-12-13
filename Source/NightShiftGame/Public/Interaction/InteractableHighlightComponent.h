@@ -19,10 +19,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	virtual void HighlightObject();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	virtual void UnhighlightObject();
 
 	UPROPERTY(BlueprintReadWrite)
